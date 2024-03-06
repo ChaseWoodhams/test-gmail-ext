@@ -1,41 +1,50 @@
-# Simple Email Poll Chrome Extension User Guide
+# Developer Guide
 
-## Installation
+## Project Structure
 
-1. Visit the Chrome Web Store and search for "Simple Email Poll".
-2. Click on "Add to Chrome" to install the extension.
-3. After installation, you will see a new icon in your Chrome toolbar.
+The project is structured into two main parts: the Chrome extension and the server.
+
+### Chrome Extension
+
+The Chrome extension is composed of several JavaScript, HTML, and CSS files:
+
+- `background.js`: Handles the main logic of the extension, including creating polls and recording responses.
+- `popup.html` and `popup.js`: Define the user interface for creating a poll.
+- `options.html` and `options.js`: Define the user interface for exporting poll data.
+- `content.js` and `inject.js`: Inject the poll creation interface into Gmail's compose window.
+- `styles.css`: Contains all the styles for the extension's user interface.
+- `manifest.json`: Defines the extension's metadata and permissions.
+
+### Server
+
+The server is a Node.js application composed of several JavaScript files:
+
+- `server.js`: Sets up the server and routes.
+- `routes/polls.js` and `routes/responses.js`: Define the endpoints for creating polls and recording responses.
+- `models/Poll.js` and `models/Response.js`: Define the data schemas for polls and responses.
+- `utils/googleSheets.js`: Contains the logic for updating the Google Sheet with new responses.
+- `utils/emailIntegration.js`: Contains the logic for sending emails with the poll.
+- `utils/dataExport.js`: Contains the logic for exporting poll data.
+
+## Shared Dependencies
+
+The project uses several shared dependencies across multiple files:
+
+- Exported Variables: `pollData` and `responseData`
+- Data Schemas: `PollSchema` and `ResponseSchema`
+- DOM Element IDs: `composeWindow`, `pollQuestion`, `pollOptions`, and `sendPoll`
+- Message Names: `createPoll`, `recordResponse`, and `updateSheet`
+- Function Names: `createPoll()`, `recordResponse()`, `updateSheet()`, `sendEmail()`, and `exportData()`
 
 ## Setup
 
-1. Click on the extension icon and select "Options".
-2. Link your Gmail account by following the on-screen instructions.
+To set up the project for development:
 
-## Creating a Poll
+1. Clone the repository.
+2. Run `npm install` to install the server's dependencies.
+3. Load the extension into Chrome by going to `chrome://extensions/`, enabling Developer mode, clicking "Load unpacked", and selecting the `extension` directory.
+4. Start the server by running `node server/server.js`.
 
-1. Open your Gmail and click on "Compose" to start a new email.
-2. Click on the extension icon in the toolbar.
-3. In the popup window, enter your poll question in the `pollQuestion` field.
-4. Enter the answer options in the `pollOptions` field, separated by commas.
-5. Click on `createPoll()` to insert the poll into your email.
+## Documentation
 
-## Sending the Poll
-
-1. After creating the poll, you can add additional content to your email if needed.
-2. Send the email as you normally would. The poll will be included in the email body.
-
-## Tracking Responses
-
-1. Responses to your poll will be automatically tracked and recorded in real-time.
-2. To view the responses, open the linked Google Sheet. Each response will be mapped to the corresponding answer option.
-
-## Exporting Data
-
-1. To export the poll data, go to the linked Google Sheet.
-2. Click on "File" > "Download" and choose your preferred format (e.g., CSV).
-
-## Troubleshooting
-
-If you encounter any issues while using the extension, please refer to the developer guide or contact our support team.
-
-Thank you for using Simple Email Poll!
+For more information on how to use the extension, see the user guide (`docs/userGuide.md`).
